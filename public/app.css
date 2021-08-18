@@ -1,0 +1,25 @@
+@font-face {
+  font-family: 'Sherwood';
+  src: url('../assets/SherwoodRegular.woff2') format('woff2'),
+    url('../assets/SherwoodRegular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+#root {
+  font-family: 'Sherwood';
+}
+
+.buyer {
+  font-size: 2em;
+}
+
+.name {
+  display: inline-block;
+  width: 15em;
+}
+
+.name, .value {
+  border-bottom: 1px dotted #000;
+}
