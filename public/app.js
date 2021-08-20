@@ -1,3 +1,7 @@
+import { firebaseInit } from './firebase.js'
+
+firebaseInit();
+
 fetch('./data/items.json')
   .then(response => response.json())
   .then(data => {
