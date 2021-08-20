@@ -1,4 +1,4 @@
-fetch('../data/items.json')
+fetch('./data/items.json')
   .then(response => response.json())
   .then(data => {
     processData(data.items);

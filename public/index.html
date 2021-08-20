@@ -4,13 +4,24 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" type="image/png" href="../assets/favicon.gif"/>
+  <link rel="icon" type="image/png" href="./favicon.gif"/>
   <link rel="stylesheet" href="./app.css">
   <title>Item Buyers</title>
 </head>
 <body>
   <div id="root"></div>
   <script src="./app.js" type="module"></script>
-</script>
+  <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyAQ0cQr2aX7Y3d9p7g4-nLmJO7BkxiwaT8",
+      authDomain: "item-buyers.firebaseapp.com",
+      projectId: "item-buyers",
+      storageBucket: "item-buyers.appspot.com",
+      messagingSenderId: "693178357218",
+      appId: "1:693178357218:web:b1b02850d40a5738ecd5bb"
+    };
+    firebase.initializeApp(firebaseConfig);
+  </script>
 </body>
 </html>
