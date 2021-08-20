@@ -2,14 +2,47 @@ import { firebaseInit } from './firebase.js'
 
 firebaseInit();
 
+const search = (itemsArray) => {
+  let rootDiv = document.getElementById("root");
+  
+  let searchBar = document.createElement("input");
+  searchBar.type = "text";
+  searchBar.placeholder = "Type your item here"
+
+  let searchResultsDiv = document.createElement("p");
+  
+  searchBar.addEventListener("keyup", (event) => {
+    if(event.key !== "Backspace" && event.key !== "Delete" && event.key !== "Tab" && event.key !== "Control" && event.key !== "Shift") {
+      let searchInput = document.createTextNode(event.key);
+
+      let searchResults = itemsArray.filter(item =>
+        Object.keys(item).some(key => item.name.toLowerCase().includes(searchBar.value.toLowerCase())));
+      
+      console.log(searchResults);
+
+      searchResultsDiv.appendChild(searchInput);
+    } else {
+      if(searchResultsDiv.lastChild) {
+        searchResultsDiv.removeChild(searchResultsDiv.lastChild);
+      }
+    }
+  }, false);
+
+  rootDiv.appendChild(searchBar);
+  rootDiv.appendChild(searchResultsDiv);
+}
+
+
 fetch('./data/items.json')
-  .then(response => response.json())
-  .then(data => {
-    processData(data.items);
-  })
-  .catch(err => {
-    console.log(err);
-  });
+.then(response => response.json())
+.then(data => {
+  search(data.items);
+  processData(data.items);
+})
+.catch(err => {
+  console.log(err);
+});
+
 
 const processData = (itemsArray) => {
   let uniqueBuyersInData = [...new Set(itemsArray.map(item => item.buyer))];
