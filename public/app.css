@@ -23,3 +23,9 @@
 .name, .value {
   border-bottom: 1px dotted #000;
 }
+
+.searchResultsDiv {
+  margin-bottom: 20px;
+  border-bottom: 5px double red;
+  text-decoration: none;
+}

@@ -3,23 +3,22 @@ import { firebaseInit } from './firebase.js'
 firebaseInit();
 const rootDiv = document.getElementById("root");
 
-
-const search = (itemsArray) => {
-  
+const search = (itemsArray) => {  
   let searchBar = document.createElement("input");
   searchBar.type = "text";
   searchBar.placeholder = "Type your item here"
 
-  let searchResultsDiv = document.createElement("p");
+  let searchResultsDiv = document.createElement("div");
 
   let searchButton = document.createElement("button");
   searchButton.textContent = "Search"
 
   searchButton.addEventListener("click", () => {
     searchResultsDiv.textContent = "";
+    searchResultsDiv.setAttribute("class", "searchResultsDiv");
     let searchInput = searchBar.value.toLowerCase();
     let searchResults = getItems(itemsArray, searchInput);
-    printItemsInDom(searchResultsDiv, searchResults);
+    processData(searchResultsDiv, searchResults);
 
 
   }, false);
@@ -29,26 +28,26 @@ const search = (itemsArray) => {
   rootDiv.appendChild(searchResultsDiv);
 }
 
- const getItems = (itemsArray, searchInput) => {
-  let searchResults = itemsArray.filter(item =>
-    Object.keys(item).some(key => item.name.toLowerCase().includes(searchInput)));
+const getItems = (itemsArray, searchInput) => {
+let searchResults = itemsArray.filter(item =>
+  Object.keys(item).some(key => item.name.toLowerCase().includes(searchInput)));
 
-   return searchResults;
- }
+  return searchResults;
+}
 
 
 fetch('./data/items.json')
-.then(response => response.json())
-.then(data => {
-  search(data.items);
-  processData(data.items);
-})
-.catch(err => {
-  console.log(err);
-});
+  .then(response => response.json())
+  .then(data => {
+    search(data.items);
+    processData(rootDiv, data.items);
+  })
+  .catch(err => {
+    console.log(err);
+  });
 
 
-const processData = (itemsArray) => {
+const processData = (_, itemsArray) => {
   let uniqueBuyersInData = [...new Set(itemsArray.map(item => item.buyer))];
   uniqueBuyersInData = uniqueBuyersInData.sort();
 
@@ -59,12 +58,12 @@ const processData = (itemsArray) => {
       return (item.name > nextItem.name) ? 1 : ((nextItem.name > item.name) ? -1 : 0);
     });
 
-    printItemsInDom(rootDiv, itemsArrayByBuyer);
+    printItemsInDom(_, itemsArrayByBuyer);
   });
 }
 
+
 const printItemsInDom = (container, items) => {
-  
   items.forEach((item, index) => {
     if(index === 0) {
       container.appendChild(document.createElement("hr"));
@@ -89,5 +88,4 @@ const printItemsInDom = (container, items) => {
 
     container.appendChild(document.createElement("br"));
   });
-
 }
