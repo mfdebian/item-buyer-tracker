@@ -11,6 +11,6 @@
   "license": "ISC",
   "dependencies": {
     "fetch": "^1.1.0",
-    "serve": "^12.0.0"
+    "serve": "^13.0.0"
   }
 }

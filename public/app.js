@@ -3,30 +3,41 @@ import { firebaseInit } from './firebase.js'
 firebaseInit();
 const rootDiv = document.getElementById("root");
 
-const search = (itemsArray) => {  
-  let searchBar = document.createElement("input");
-  searchBar.type = "text";
-  searchBar.placeholder = "Type your item here"
 
+const search = (itemsArray) => {
   let searchResultsDiv = document.createElement("div");
 
+  let searchBar = document.createElement("input");
+  searchBar.type = "text";
+  searchBar.placeholder = "Type your item here";
+  
   let searchButton = document.createElement("button");
-  searchButton.textContent = "Search"
+  searchButton.textContent = "Search";
+  
+  rootDiv.appendChild(searchBar);
+  rootDiv.appendChild(searchButton);
+  rootDiv.appendChild(searchResultsDiv);
 
-  searchButton.addEventListener("click", () => {
+  const getSearchResultsAndCallprocessData = () => {
     searchResultsDiv.textContent = "";
     searchResultsDiv.setAttribute("class", "searchResultsDiv");
     let searchInput = searchBar.value.toLowerCase();
     let searchResults = getItems(itemsArray, searchInput);
     processData(searchResultsDiv, searchResults);
-
-
+  }
+  
+  searchBar.addEventListener("keydown", (event) => {
+    if(event.key==="Enter") {
+      getSearchResultsAndCallprocessData();
+    }
   }, false);
 
-  rootDiv.appendChild(searchBar);
-  rootDiv.appendChild(searchButton);
-  rootDiv.appendChild(searchResultsDiv);
+  searchButton.addEventListener("click", () => {
+    getSearchResultsAndCallprocessData();
+  }, false);
+
 }
+
 
 const getItems = (itemsArray, searchInput) => {
 let searchResults = itemsArray.filter(item =>
