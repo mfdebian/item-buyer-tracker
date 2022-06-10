@@ -68,23 +68,12 @@ const searchSection = (itemsArray) => {
   it's corresponding items will be the values.
 */
 const processData = (itemsArray) => {
-  let uniqueBuyersInData = [...new Set(itemsArray.map(item => item.buyer))];
-  uniqueBuyersInData = uniqueBuyersInData.sort();
-  let itemsObject = {};
-
-  uniqueBuyersInData.forEach(buyer => {
-    
-    let itemsArrayByBuyer = itemsArray.filter(item => item.buyer === buyer);
-
-    itemsArrayByBuyer = itemsArrayByBuyer.sort((item, nextItem) => {
-      return (item.name > nextItem.name) ? 1 : ((nextItem.name > item.name) ? -1 : 0);
-    });
-    
-    itemsObject[buyer] = itemsArrayByBuyer;
-
-  });
-
-  return itemsObject;
+  return itemsArray.reduce((acc, currentValue) => {
+    let key = currentValue['buyer'];
+    acc[key] ? null : acc[key] = [];
+    acc[key].push(currentValue)
+    return acc
+  }, {})
 
 }
 
