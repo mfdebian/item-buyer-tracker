@@ -39,6 +39,12 @@ const searchSection = (itemsArray) => {
       search();
     }
   }, false);
+  
+  searchBar.addEventListener("keyup", (event) => {
+    if (!/[!^+%&/()=?_\-~`;#$½{[\]}\\|<>@,]/gi.test(event.key)) {
+      search();
+    }
+  }, false);
 
   searchButton.addEventListener("click", () => {
     search();
@@ -53,7 +59,7 @@ const searchSection = (itemsArray) => {
     searchResultsDiv.textContent = "";
     searchResultsDiv.setAttribute("class", "searchResultsDiv");
     let searchInput = searchBar.value.toLowerCase();
-    
+
     let searchResults = itemsArray.filter(item =>
       Object.keys(item).some(() => item.name.toLowerCase().includes(searchInput)));
 
@@ -71,7 +77,7 @@ const processData = (itemsArray) => {
   itemsArray = itemsArray.sort((item, nextItem) => {
     return (item.name > nextItem.name) ? 1 : ((nextItem.name > item.name) ? -1 : 0);
   });
-  
+
   return itemsArray.reduce((acc, currentValue) => {
     let key = currentValue['buyer'];
     acc[key] ? null : acc[key] = [];
