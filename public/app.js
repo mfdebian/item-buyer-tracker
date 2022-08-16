@@ -68,6 +68,10 @@ const searchSection = (itemsArray) => {
   it's corresponding items will be the values.
 */
 const processData = (itemsArray) => {
+  itemsArray = itemsArray.sort((item, nextItem) => {
+    return (item.name > nextItem.name) ? 1 : ((nextItem.name > item.name) ? -1 : 0);
+  });
+  
   return itemsArray.reduce((acc, currentValue) => {
     let key = currentValue['buyer'];
     acc[key] ? null : acc[key] = [];
