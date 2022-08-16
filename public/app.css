@@ -7,12 +7,47 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Pixel Operator';
+  src: url('./assets/PixelOperator.woff2') format('woff2'),
+      url('./assets/PixelOperator.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+body {
+  background-image: url('./assets/clientBackground.png');
+  background-repeat: repeat;
+  color: #bebebe;
+}
+
+
 #root {
+  font-family: 'Pixel Operator';
+}
+
+.header {
   font-family: 'Sherwood';
+  color: #f0f000;
+  text-align: center;
+  text-shadow: 2px 2px #7a7361;
+  font-size: 3em;
+  margin-bottom: 5px;
+}
+
+.subHeader {
+  color: #f0f000;
+  padding-top: 5px;
+  font-size: 1.3em;
+  text-shadow: 0px 0px, 1px 0px, 1px 0px;
 }
 
 .buyer {
-  font-size: 2em;
+  color: #06c000;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+  font-weight: 900;
+  font-size: 36px;
 }
 
 .name {
@@ -20,12 +55,45 @@
   width: 15em;
 }
 
+.value {
+  padding-bottom: 0.5px;
+}
+
 .name, .value {
-  border-bottom: 1px dotted #000;
+  font-size: 1.3em;
+  text-shadow: 0px 0px, 1px 0px, 1px 0px;
+  border-bottom: 2px solid #343434;
+}
+
+.searchResultsText {
+  color: #f0f000;
+  font-size: 1.3em;
+  text-shadow: 0px 0px, 1px 0px, 1px 0px;
+
+}
+.searchResultsTextEmpty {
+  color: #f75c5a;
+  font-size: 1.3em;
+  text-shadow: 0px 0px, 1px 0px, 1px 0px;
 }
 
 .searchResultsDiv {
-  margin-bottom: 20px;
-  border-bottom: 5px double red;
+  padding: 10px;
+  margin-top: 20px;
+  border: 5px double #757575;
   text-decoration: none;
+}
+
+.searchBarContainer {
+  text-align: center;
+}
+
+.searchBar {
+  background-image: url('./assets/searchBackground.png');
+  font-family: 'Pixel Operator';
+  caret-color: #bebebe;
+  font-size: 1.3em;
+  text-shadow: 0px 1px, 1px 0px, 1px 1px;
+  color: #7a7361;
+  width: 70%;
 }

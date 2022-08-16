@@ -6,7 +6,9 @@ const rootDiv = document.getElementById("root");
 fetch('./data/items.json')
   .then(response => response.json())
   .then(data => {
+    headerSection();
     searchSection(data.items);
+    subHeaderSection();
     let items = processData(data.items);
     printItemsInDom(rootDiv, items);
   })
@@ -14,6 +16,19 @@ fetch('./data/items.json')
     console.log(err);
   });
 
+  const headerSection = () => {
+    let header = document.createElement("div");
+    header.setAttribute("class", "header");
+    header.textContent = "Item Buyers";
+    rootDiv.appendChild(header);
+  }
+
+  const subHeaderSection = () => {
+    let subHeader = document.createElement("div");
+    subHeader.setAttribute("class", "subHeader");
+    subHeader.textContent = "All items:";
+    rootDiv.appendChild(subHeader);
+  }
 
 /* 
   searchSection() creates the search bar, the search button
@@ -23,15 +38,16 @@ fetch('./data/items.json')
 const searchSection = (itemsArray) => {
   let searchResultsDiv = document.createElement("div");
 
+  let searchBarDiv = document.createElement("div");
+  searchBarDiv.setAttribute("class", "searchBarContainer");
+
   let searchBar = document.createElement("input");
   searchBar.type = "text";
-  searchBar.placeholder = "Type your item here";
+  searchBar.setAttribute("class", "searchBar");
+  searchBar.placeholder = "Type to search";
   
-  let searchButton = document.createElement("button");
-  searchButton.textContent = "Search";
-  
-  rootDiv.appendChild(searchBar);
-  rootDiv.appendChild(searchButton);
+  searchBarDiv.appendChild(searchBar);
+  rootDiv.appendChild(searchBarDiv);
   rootDiv.appendChild(searchResultsDiv);
   
   searchBar.addEventListener("keydown", (event) => {
@@ -46,25 +62,37 @@ const searchSection = (itemsArray) => {
     }
   }, false);
 
-  searchButton.addEventListener("click", () => {
-    search();
-  }, false);
-
   /*
     search() filters the items by the user's input.
     Then calls the function to process the data and 
     lastly the function to display it.
   */
   const search = () => {
+    let searchResultsText = document.createElement("span");
+    searchResultsText.setAttribute("class", "searchResultsText");
+    searchResultsText.textContent = "Search results:";
+    
     searchResultsDiv.textContent = "";
     searchResultsDiv.setAttribute("class", "searchResultsDiv");
+    searchResultsDiv.appendChild(searchResultsText);
     let searchInput = searchBar.value.toLowerCase();
+    
+    if(searchInput.length === 0) {
+      searchResultsDiv.textContent = "";
+      searchResultsDiv.classList.remove("searchResultsDiv");
+    } else {
+      let searchResults = itemsArray.filter(item =>
+        Object.keys(item).some(() => item.name.toLowerCase().includes(searchInput)));
+        
+      let items = processData(searchResults);
+        
+      if(items && Object.keys(items).length === 0 && Object.getPrototypeOf(items) === Object.prototype) {
+        searchResultsText.setAttribute("class", "searchResultsTextEmpty");
+        searchResultsText.textContent += ' Empty.'
+      }
 
-    let searchResults = itemsArray.filter(item =>
-      Object.keys(item).some(() => item.name.toLowerCase().includes(searchInput)));
-
-    let items = processData(searchResults);
-    printItemsInDom(searchResultsDiv, items);
+      printItemsInDom(searchResultsDiv, items);
+    }
   }
 }
 
